@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Audiovisual</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.ico" />
+  <style type="text/css">
+    .content-wrapper {
+      background-image: url("images/bg-login.png"); 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth bg-login overlay">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left p-5">
+              <div>
+                <img src="images/logo_login.png" style="width: 300px; height: 80px;">
+              </div>
+              <form method="post" class="signin" id="signin" name="signin"
+          action="#">
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-lg" name="usuario" id="usuario" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" name="senha" id="senha" placeholder="Senha">
+                </div>
+                <div class="mt-3">
+                  <button class="btn btn-block btn-gradient-success btn-lg font-weight-medium auth-form-btn" id="btlogin">ENTRAR</button>
+                </div>
+                <div id="login_alert" align="center"></div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <label class="form-check-label text-muted">
+ 
+                    </label>
+                  </div>
+                  <a href="cadastro_usuario.php" class="auth-link text-black">Cadastre-se</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
+  <!-- endinject -->
+     <script type="text/javascript"> 
+        
+  function disableGif(){
+    $("#loading").hide();
+    }
+    
+  jQuery(document).ready(function(){
+    jQuery('#signin').submit(function(){
+      $("#loading").show();
+      $("#btlogin").prop("disabled", true);
+    
+      var dados = jQuery( this ).serialize();     
+      jQuery.ajax({
+        type: "POST",
+        url: "validar_acesso.php",
+        data: dados,
+        success: function( data )       
+        {           
+          console.log(data);
+          $("#loading").hide();
+          $("#btlogin").prop("disabled", false);        
+          if (data == 0){
+            var html1 = "<div style=\"color: #F00;\">Dados incorretos. Por favor, tente novamente!<div>";             
+            $('#login_alert').html(html1);
+          }
+          if (data == 1){
+            window.location.href = "dashboard.php";             
+          }                                             
+        }
+      });
+      
+      return false;
+    });
+  });   
+  
+  </script>   
+</body>
+
+</html>
